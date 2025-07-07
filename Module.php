@@ -37,6 +37,7 @@ use Common\Stdlib\PsrMessage;
 use Common\TraitModule;
 use Laminas\EventManager\Event;
 use Laminas\EventManager\SharedEventManagerInterface;
+use Laminas\Mvc\MvcEvent;
 use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
 use Omeka\Module\AbstractModule;
 
@@ -60,6 +61,12 @@ class Module extends AbstractModule
      * @var bool
      */
     protected $isBatchUpdate;
+
+    public function onBootstrap(MvcEvent $event): void
+    {
+        parent::onBootstrap($event);
+        $this->addAclRules();
+    }
 
     protected function preInstall(): void
     {
@@ -114,6 +121,91 @@ class Module extends AbstractModule
         );
         // Translate early because it is stored in session.
         $messenger->addSuccess((new PsrMessage($html, array_map(fn ($v) => $v->setEscapeHtml(false)->setTranslator($translator)->translate(), $context)))->setEscapeHtml(false));
+    }
+
+    /**
+     * Add ACL role and rules for this module.
+     *
+     * The rights are less restrictive than resource, and similar to value
+     * annotations.
+     */
+    protected function addAclRules(): void
+    {
+        /**
+         * @var \Omeka\Permissions\Acl $acl
+         * @var array $roles
+         *
+         * @see \Omeka\Service\AclFactory::addRules()
+         */
+        $services = $this->getServiceLocator();
+        $acl = $services->get('Omeka\Acl');
+
+        // Base roles can create but not delete not-owned according to Omeka rules.
+        $roles = $acl->getRoles();
+        // $backendRoles = array_diff($roles, ['guest', 'guest_private', 'guest_private_site', 'annotator']);
+        $creatorRoles = ['author', 'reviewer', 'editor', 'site_admin', 'global_admin'];
+        // $creatorBaseRoles = ['author'];
+        // The main admin roles have access to anything by default in Omeka, so
+        // no need to add rules.
+        $creatorAdminRoles = ['reviewer', 'editor'];
+        // $adminRoles = ['site_admin', 'global_admin'];
+
+        $acl
+            // Anybody can read read resource assets: there is a check on the
+            // included resource.
+            ->allow(
+                null,
+                [\AssetMulti\Api\Adapter\ResourceAssetAdapter::class],
+                [
+                    'read',
+                    'search',
+                ]
+            )
+            ->allow(
+                null,
+                [\AssetMulti\Entity\ResourceAsset::class],
+                [
+                    'read',
+                ]
+            )
+
+            ->allow(
+                $creatorRoles,
+                [\AssetMulti\Api\Adapter\ResourceAssetAdapter::class],
+                [
+                    'create',
+                    'update',
+                    'delete',
+                ]
+            )
+            ->allow(
+                $creatorRoles,
+                [\AssetMulti\Entity\ResourceAsset::class],
+                [
+                    'create',
+                    'update',
+                    'delete',
+                ]
+            )
+
+            ->allow(
+                $creatorAdminRoles,
+                [\AssetMulti\Api\Adapter\ResourceAssetAdapter::class],
+                [
+                    'batch_update',
+                    'batch_update_all',
+                    'batch_delete',
+                    'batch_delete_all',
+                ]
+            )
+            ->allow(
+                $creatorAdminRoles,
+                [\AssetMulti\Entity\ResourceAsset::class],
+                [
+                    'view-all',
+                ]
+            )
+        ;
     }
 
     public function attachListeners(SharedEventManagerInterface $sharedEventManager): void
