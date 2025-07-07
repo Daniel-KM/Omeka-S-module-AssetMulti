@@ -44,15 +44,20 @@ it can be replaced by any pair of type/label. The types "default" and "original"
 are reserved for future purpose.
 
 Add new assets in the tab "Advanced" of the resource (item, item set or media).
+Warning: a resource can only have one asset by type.
 
-To use them in themes, use the view helper "resourceAsset":
+To use them in themes for now, the theme should be adapted. So use the view
+helper "assetResource":
 
 ```php
-$asset = $this->resourceAsset($resource, $type);
-// Or if arguments are multiple or empty, output is an array ordered by types:
-$assets = $this->resourceAsset($resource, $types);
-$assets = $this->resourceAsset($resources, $type);
-$resourceAssets = $this->resourceAsset($resources, $types);
+// In most of the cases, a specific asset is needed.
+$asset = $this->assetResource($resource, $type);
+// Or if there are no or multiple types, output is an array ordered by type:
+$assets = $this->assetResource($resource, $types);
+// When there are multiple resources and one type, the output is a list of ResourceAssets, not Assets.
+$resourceAssets = $this->assetResource($resources, $type);
+// When there are multiple resources and no or multiple types, the output is a list of ResourceAssets by type.
+$resourceAssetsByType = $this->assetResource($resources, $types);
 ```
 
 This view helper is just a wrapper to the api. So it is possible to search all
@@ -76,6 +81,7 @@ TODO
 - [ ] Add handlers and site/theme settings to manage the type of assets automatically.
 - [ ] Use an open list of types in the advanced tab, so the user can add any specific type for an asset.
 - [ ] Display a link to all resources with a specific assets in admin / assets.
+- [-] Allow multiple assets by resource with the same type. No: the use cases are a lot less than one asset by type.
 
 
 Warning
