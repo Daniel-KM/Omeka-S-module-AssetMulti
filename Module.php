@@ -37,6 +37,7 @@ use Common\Stdlib\PsrMessage;
 use Common\TraitModule;
 use Laminas\EventManager\Event;
 use Laminas\EventManager\SharedEventManagerInterface;
+use Omeka\Api\Representation\AbstractResourceEntityRepresentation;
 use Omeka\Module\AbstractModule;
 
 /**
@@ -155,7 +156,6 @@ class Module extends AbstractModule
                 [$this, 'addAdvancedTabElements']
             );
 
-            /*
             $sharedEventManager->attach(
                 $controller,
                 'view.details',
@@ -166,8 +166,8 @@ class Module extends AbstractModule
                 'view.show.sidebar',
                 [$this, 'handleResourceSidebar']
             );
-            */
         }
+
         // Handle main settings.
         $sharedEventManager->attach(
             \Omeka\Form\SettingForm::class,
@@ -378,5 +378,59 @@ class Module extends AbstractModule
         }
 
         echo $view->formCollection($collection, true);
+    }
+
+    public function handleResourceDetails(Event $event): void
+    {
+        $resource = $event->getParam('entity');
+        echo $this->showResource($event, $resource);
+    }
+
+    public function handleResourceSidebar(Event $event): void
+    {
+        $view = $event->getTarget();
+        $resource = $view->vars()->offsetGet('resource');
+        echo $this->showResource($event, $resource);
+    }
+
+    protected function showResource(Event $event, AbstractResourceEntityRepresentation $resource): string
+    {
+        /**
+         * @var \Omeka\Settings\Settings $settings
+         * @var \AssetMulti\View\Helper\ResourceAsset $resourceAsset
+         */
+        $services = $this->getServiceLocator();
+        $plugins = $services->get('ViewHelperManager');
+        $resourceAsset = $plugins->get('resourceAsset');
+
+        $resourceAssets = $resourceAsset($resource);
+        if (!count($resourceAssets)) {
+            return '';
+        }
+
+        $escape = $plugins->get('escapeHtml');
+        $settings = $services->get('Omeka\Settings');
+        $translate = $plugins->get('translate');
+        $escapeAttr = $plugins->get('escapeHtmlAttr');
+
+        $title = $translate('Complementary assets'); // @translate
+
+        $banners = $settings->get('assetmulti_banners') ?: [];
+
+        /** @var \Omeka\Api\Representation\AssetRepresentation $asset */
+        $html = [];
+        foreach ($resourceAssets as $type => $asset) {
+            $html[] = sprintf('<a href="%1$s">%2$s</a>', $escapeAttr($asset->assetUrl()), $escape($banners[$type] ?? $type));
+        }
+        $html = '<li>' . implode("</li>\n<li>", $html) . '</li>';
+
+        return <<<HTML
+            <div class="meta-group">
+                <h4>$title</h4>
+                <div class="value"><ul>
+                    $html
+                </ul></div>
+            </div>
+            HTML;
     }
 }
