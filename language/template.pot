@@ -17,52 +17,56 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/scripts/upgrade.php:39 Module.php:71
+#: data/scripts/upgrade.php:39 Module.php:79
 #, php-format
 msgid "The module %1$s should be upgraded to version %2$s or later."
 msgstr ""
 
-#: Module.php:97
+#: Module.php:105
 msgid "To get multiple assets for a resource:"
 msgstr ""
 
-#: Module.php:99
+#: Module.php:107
 msgid "First, define wanted asset type names in {link}main settings{link_end}."
 msgstr ""
 
-#: Module.php:106
+#: Module.php:114
 msgid ""
 "Second, add new assets to resources in the tab \"advanced\" of the {link}"
 "resource form{link_end}."
 msgstr ""
 
-#: Module.php:113
+#: Module.php:121
 msgid "Third, adapt the site theme to use new resource assets."
 msgstr ""
 
-#: Module.php:224
+#: Module.php:317
 msgid ""
 "Some complementary assets were removed because the type is missing or "
 "duplicated."
 msgstr ""
 
-#: Module.php:232
+#: Module.php:325
 msgid ""
 "Some complementary assets were removed because the types {types} are not in "
 "the list of allowed types."
 msgstr ""
 
-#: Module.php:283
+#: Module.php:376
 msgid ""
 "Some complementary assets were not attached. Check data or ask an "
 "administrator. {msg}"
 msgstr ""
 
-#: Module.php:287
+#: Module.php:380
 msgid "[Asset Multi] Some complementary assets were not attached: {msg}"
 msgstr ""
 
-#: Module.php:415
+#: Module.php:510
+msgid "Complementary thumbnails"
+msgstr ""
+
+#: Module.php:510
 msgid "Complementary assets"
 msgstr ""
 
@@ -99,14 +103,6 @@ msgstr ""
 msgid ""
 "The type \"{type}\" is not unique for the pair resource {resource_id} and "
 "asset {asset_id}."
-msgstr ""
-
-#: config/module.config.php:46
-msgid "Home"
-msgstr ""
-
-#: config/module.config.php:47
-msgid "Item set page"
 msgstr ""
 
 #: config/module.config.php:48

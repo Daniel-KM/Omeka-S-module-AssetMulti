@@ -70,8 +70,12 @@ msgstr ""
 "{msg}"
 
 #: Module.php:415
-msgid "Complementary assets"
+msgid "Complementary thumbnails"
 msgstr "Vignettes complémentaires"
+
+#: Module.php:415
+msgid "Complementary assets"
+msgstr "Fichiers complémentaires"
 
 #: src/Form/SettingsFieldset.php:10
 msgid "Resource assets"
