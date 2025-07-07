@@ -16,6 +16,11 @@ return [
             dirname(__DIR__) . '/data/doctrine-proxies',
         ],
     ],
+    'view_helpers' => [
+        'invokables' => [
+            'resourceAsset' => View\Helper\ResourceAsset::class,
+        ],
+    ],
     'form_elements' => [
         'invokables' => [
             Form\SettingsFieldset::class => Form\SettingsFieldset::class,
