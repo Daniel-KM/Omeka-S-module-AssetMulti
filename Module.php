@@ -397,13 +397,13 @@ class Module extends AbstractModule
     {
         /**
          * @var \Omeka\Settings\Settings $settings
-         * @var \AssetMulti\View\Helper\ResourceAsset $resourceAsset
+         * @var \AssetMulti\View\Helper\AssetResource $assetResource
          */
         $services = $this->getServiceLocator();
         $plugins = $services->get('ViewHelperManager');
-        $resourceAsset = $plugins->get('resourceAsset');
+        $assetResource = $plugins->get('assetResource');
 
-        $resourceAssets = $resourceAsset($resource);
+        $resourceAssets = $assetResource($resource);
         if (!count($resourceAssets)) {
             return '';
         }

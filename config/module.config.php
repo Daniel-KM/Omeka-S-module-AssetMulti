@@ -18,7 +18,7 @@ return [
     ],
     'view_helpers' => [
         'invokables' => [
-            'resourceAsset' => View\Helper\ResourceAsset::class,
+            'assetResource' => View\Helper\AssetResource::class,
         ],
     ],
     'form_elements' => [

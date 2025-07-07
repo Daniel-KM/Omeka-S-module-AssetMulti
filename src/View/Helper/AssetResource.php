@@ -4,7 +4,7 @@ namespace AssetMulti\View\Helper;
 
 use Laminas\View\Helper\AbstractHelper;
 
-class ResourceAsset extends AbstractHelper
+class AssetResource extends AbstractHelper
 {
     /**
      * Get the asset or all assets or all resource assets for resources or types.
