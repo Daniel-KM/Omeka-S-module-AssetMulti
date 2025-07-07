@@ -69,7 +69,7 @@ msgstr ""
 "[Asset Multi] Certaines vignettes complémentaires n’ont pas été attachées : "
 "{msg}"
 
-#: Module.php:414
+#: Module.php:415
 msgid "Complementary assets"
 msgstr "Vignettes complémentaires"
 
@@ -110,46 +110,50 @@ msgstr ""
 "Le type \"{type}\" n’est pas unique pour la paire ressource {resource_id} et "
 "vignette {asset_id}."
 
+#: config/module.config.php:46
+msgid "Home"
+msgstr "Accueil"
+
 #: config/module.config.php:47
+msgid "Item set page"
+msgstr "Page de collection"
+
+#: config/module.config.php:48
+msgid "Search results"
+msgstr "Résultats de recherche"
+
+#: config/module.config.php:51
 msgid "Large"
 msgstr "Large"
 
-#: config/module.config.php:49
+#: config/module.config.php:53
 msgid "Midsized"
 msgstr "Moyen"
 
-#: config/module.config.php:50
+#: config/module.config.php:54
 msgid "Square"
 msgstr "Carré"
 
-#: config/module.config.php:54
-msgid "Sidebar"
-msgstr "Barre de côté"
+#~ msgid "Sidebar"
+#~ msgstr "Barre de côté"
 
-#: config/module.config.php:55
-msgid "Footer"
-msgstr "Pied de page"
+#~ msgid "Footer"
+#~ msgstr "Pied de page"
 
-#: config/module.config.php:57
-msgid "Leaderboard"
-msgstr "Leaderboard"
+#~ msgid "Leaderboard"
+#~ msgstr "Leaderboard"
 
-#: config/module.config.php:58
-msgid "Large rectangle"
-msgstr "Rectangle large"
+#~ msgid "Large rectangle"
+#~ msgstr "Rectangle large"
 
-#: config/module.config.php:59
-msgid "Medium rectangle"
-msgstr "Rectangle moyen"
+#~ msgid "Medium rectangle"
+#~ msgstr "Rectangle moyen"
 
-#: config/module.config.php:60
-msgid "Wide skyscraper"
-msgstr "Gratte-ciel large"
+#~ msgid "Wide skyscraper"
+#~ msgstr "Gratte-ciel large"
 
-#: config/module.config.php:61
-msgid "Skyscraper"
-msgstr "Gratte-ciel"
+#~ msgid "Skyscraper"
+#~ msgstr "Gratte-ciel"
 
-#: config/module.config.php:62
-msgid "Mobile banner"
-msgstr "Bannière mobile"
+#~ msgid "Mobile banner"
+#~ msgstr "Bannière mobile"

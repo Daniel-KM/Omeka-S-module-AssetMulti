@@ -42,12 +42,17 @@ return [
     'assetmulti' => [
         'settings' => [
             'assetmulti_banners' => [
-                // These types are the default ones, they can be replace.
-                // Omeka sizes.
+                // These types are the default ones, they can be replaced.
+                'home' => 'Home', // @translate
+                'item_set' => 'Item set page', // @translate
+                'results' => 'Search results', // @translate
+                // Omeka sizes, to be more consistent when a resource has a
+                // specific thumbnail.
                 'large' => 'Large', // @translate
                 // Use "Midsized" to avoid issue with translation of "medium".
                 'medium' => 'Midsized', // @translate
                 'square' => 'Square', // @translate
+                /*
                 // Web page sizes.
                 'home' => 'Home', // @translate
                 'header' => 'Header', // @translate
@@ -60,6 +65,7 @@ return [
                 'wide_skyscraper' => 'Wide skyscraper', // @translate
                 'skyscraper' => 'Skyscraper', // @translate
                 'mobile_banner' => 'Mobile banner', // @translate
+                */
             ],
         ],
     ],
