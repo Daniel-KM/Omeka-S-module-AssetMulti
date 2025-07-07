@@ -1,0 +1,13 @@
+CREATE TABLE `resource_asset` (
+    `id` INT AUTO_INCREMENT NOT NULL,
+    `resource_id` INT NOT NULL,
+    `asset_id` INT NOT NULL,
+    `type` VARCHAR(190) NOT NULL,
+    INDEX IDX_2914206E89329D25 (`resource_id`),
+    INDEX IDX_2914206E5DA1941 (`asset_id`),
+    UNIQUE INDEX UNIQ_2914206EA29A910A89329D255DA1941 (`type`, `resource_id`, `asset_id`),
+    PRIMARY KEY(`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB;
+
+ALTER TABLE `resource_asset` ADD CONSTRAINT FK_2914206E89329D25 FOREIGN KEY (`resource_id`) REFERENCES `resource` (`id`) ON DELETE CASCADE;
+ALTER TABLE `resource_asset` ADD CONSTRAINT FK_2914206E5DA1941 FOREIGN KEY (`asset_id`) REFERENCES `asset` (`id`) ON DELETE CASCADE;

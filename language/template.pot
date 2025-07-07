@@ -1,0 +1,146 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-07 00:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/scripts/upgrade.php:39 Module.php:71
+#, php-format
+msgid "The module %1$s should be upgraded to version %2$s or later."
+msgstr ""
+
+#: Module.php:97
+msgid "To get multiple assets for a resource:"
+msgstr ""
+
+#: Module.php:99
+msgid "First, define wanted asset type names in {link}main settings{link_end}."
+msgstr ""
+
+#: Module.php:106
+msgid ""
+"Second, add new assets to resources in the tab \"advanced\" of the {link}"
+"resource form{link_end}."
+msgstr ""
+
+#: Module.php:113
+msgid "Third, adapt the site theme to use new resource assets."
+msgstr ""
+
+#: Module.php:224
+msgid ""
+"Some complementary assets were removed because the type is missing or "
+"duplicated."
+msgstr ""
+
+#: Module.php:232
+msgid ""
+"Some complementary assets were removed because the types {types} are not in "
+"the list of allowed types."
+msgstr ""
+
+#: Module.php:283
+msgid ""
+"Some complementary assets were not attached. Check data or ask an "
+"administrator. {msg}"
+msgstr ""
+
+#: Module.php:287
+msgid "[Asset Multi] Some complementary assets were not attached: {msg}"
+msgstr ""
+
+#: Module.php:414
+msgid "Complementary assets"
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:10
+msgid "Resource assets"
+msgstr ""
+
+#: src/Form/SettingsFieldset.php:22
+msgid "Types and labels to attach multiple assets by resource"
+msgstr ""
+
+#: src/Api/Adapter/ResourceAssetAdapter.php:104
+msgid "An asset for resource must have a resource."
+msgstr ""
+
+#: src/Api/Adapter/ResourceAssetAdapter.php:107
+msgid "An asset for resource must have an asset."
+msgstr ""
+
+#: src/Api/Adapter/ResourceAssetAdapter.php:111
+msgid "An asset for resource must have a type."
+msgstr ""
+
+#: src/Api/Adapter/ResourceAssetAdapter.php:173
+#: src/Api/Adapter/ResourceAssetAdapter.php:176
+msgid "The resource cannot be empty."
+msgstr ""
+
+#: src/Api/Adapter/ResourceAssetAdapter.php:180
+msgid "The type cannot be empty."
+msgstr ""
+
+#: src/Api/Adapter/ResourceAssetAdapter.php:188
+msgid ""
+"The type \"{type}\" is not unique for the pair resource {resource_id} and "
+"asset {asset_id}."
+msgstr ""
+
+#: config/module.config.php:47
+msgid "Large"
+msgstr ""
+
+#: config/module.config.php:49
+msgid "Midsized"
+msgstr ""
+
+#: config/module.config.php:50
+msgid "Square"
+msgstr ""
+
+#: config/module.config.php:54
+msgid "Sidebar"
+msgstr ""
+
+#: config/module.config.php:55
+msgid "Footer"
+msgstr ""
+
+#: config/module.config.php:57
+msgid "Leaderboard"
+msgstr ""
+
+#: config/module.config.php:58
+msgid "Large rectangle"
+msgstr ""
+
+#: config/module.config.php:59
+msgid "Medium rectangle"
+msgstr ""
+
+#: config/module.config.php:60
+msgid "Wide skyscraper"
+msgstr ""
+
+#: config/module.config.php:61
+msgid "Skyscraper"
+msgstr ""
+
+#: config/module.config.php:62
+msgid "Mobile banner"
+msgstr ""

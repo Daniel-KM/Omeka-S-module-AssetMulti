@@ -1,0 +1,36 @@
+{
+    "name": "daniel-km/omeka-s-module-asset-multi",
+    "description": "Module for Omeka S that allows to attach multiple assets to resources, for example to display an horizontal banners in home page, a skyscraper in another page and a square in lists.",
+    "type": "library",
+    "license": "CECILL-2.1",
+    "authors": [
+        {
+            "name": "Daniel Berthereau",
+            "email": "Daniel.git@Berthereau.net"
+        }
+    ],
+    "homepage": "https://gitlab.com/Daniel-KM/Omeka-S-module-AssetMulti",
+    "support": {
+        "issues": "https://gitlab.com/Daniel-KM/Omeka-S-module-AssetMulti/-/issues",
+        "forum": "https://forum.omeka.org/"
+    },
+    "keywords": [
+        "Omeka S",
+        "module",
+        "asset",
+        "theme building"
+    ],
+    "require-dev": {
+        "biblibre/omeka-s-test-helper": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "DanielKm\\OmekaSModuleAssetMulti\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AssetMultiTest\\": "test/AssetMultiTest/"
+        }
+    }
+}
