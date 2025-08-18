@@ -388,6 +388,7 @@ class Module extends AbstractModule
          * @var \Laminas\View\Renderer\PhpRenderer $view
          * @var \Omeka\Api\Manager $api
          * @var \Omeka\Settings\Settings $settings
+         * @var \Common\Stdlib\EasyMeta $easyMeta
          */
         $services = $this->getServiceLocator();
         $api = $services->get('Omeka\ApiManager');
@@ -400,27 +401,47 @@ class Module extends AbstractModule
 
         $view = $event->getTarget();
 
-        $resource = $view->resource;
-        $resourceId = method_exists($resource, 'id') ? $resource->id() : $resource->getId();
-
         $assetUrl = $view->plugin('assetUrl');
         $view->headLink()
             ->appendStylesheet($assetUrl('css/asset-multi.css', 'AssetMulti'));
         $view->headScript()
             ->appendFile($assetUrl('js/asset-multi.js', 'AssetMulti'), 'text/javascript', ['defer' => 'defer']);
 
-        /** @var \AssetMulti\Api\Representation\ResourceAssetRepresentation[] $resourceAssets */
-        $resourceAssets = $api->search('resource_assets', ['resource_id' => $resourceId])->getContent();
         $values = [];
-        $index = 0;
-        foreach ($resourceAssets as $resourceAsset) {
-            $values[] = [
-                // 'o:type' => $resourceAsset->type(),
-                // 'o:asset' => ['o:id' => $resourceAsset->asset()->id()],
-                'o:resource_asset[' . $index . '][o:type]' => $resourceAsset->type(),
-                'o:resource_asset[' . $index . '][o:asset][o:id]' => $resourceAsset->asset()->id(),
-            ];
-            ++$index;
+
+        // The resource may be null for a new resource.
+        $resource = $view->vars()->offsetGet('resource');
+
+        // Try to get the resource from the route.
+        if (!$resource) {
+            $easyMeta = $services->get('Common\EasyMeta');
+            $routeMatch = $services->get('Application')->getMvcEvent()->getRouteMatch();
+            $resourceId = (int) $routeMatch->getParam('id');
+            $resourceType = $routeMatch->getParam('controller') ?: $routeMatch->getParam('__CONTROLLER__');
+            $resourceName = $easyMeta->resourceName($resourceType);
+            if ($resourceId && $resourceName) {
+                try {
+                    $resource = $api->read($resourceType, $resourceId)->getContent();
+                } catch (\Omeka\Api\Exception\NotFoundException $e) {
+                    $resource = null;
+                }
+            }
+        }
+
+        if ($resource) {
+            $resourceId = method_exists($resource, 'id') ? $resource->id() : $resource->getId();
+            /** @var \AssetMulti\Api\Representation\ResourceAssetRepresentation[] $resourceAssets */
+            $resourceAssets = $api->search('resource_assets', ['resource_id' => $resourceId])->getContent();
+            $index = 0;
+            foreach ($resourceAssets as $resourceAsset) {
+                $values[] = [
+                    // 'o:type' => $resourceAsset->type(),
+                    // 'o:asset' => ['o:id' => $resourceAsset->asset()->id()],
+                    'o:resource_asset[' . $index . '][o:type]' => $resourceAsset->type(),
+                    'o:resource_asset[' . $index . '][o:asset][o:id]' => $resourceAsset->asset()->id(),
+                ];
+                ++$index;
+            }
         }
 
         /**
