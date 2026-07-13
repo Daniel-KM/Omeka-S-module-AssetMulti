@@ -354,7 +354,7 @@ class Module extends AbstractModule
                 // different.
                 try {
                     $api->update('resource_assets', $resourceAssetId, $data);
-                } catch (\Exception $e) {
+                } catch (\Throwable $e) {
                     $exception = $e;
                 }
             } else {
@@ -363,7 +363,7 @@ class Module extends AbstractModule
                 // It should work anyway with any number of assets.
                 try {
                     $api->create('resource_assets', $data);
-                } catch (\Exception $e) {
+                } catch (\Throwable $e) {
                     $exception = $e;
                 }
             }
@@ -374,7 +374,7 @@ class Module extends AbstractModule
             foreach ($existingResourceAssetIds as $resourceAssetId) {
                 try {
                     $api->delete('resource_assets', $resourceAssetId);
-                } catch (\Exception $e) {
+                } catch (\Throwable $e) {
                     // Already removed.
                 }
             }
