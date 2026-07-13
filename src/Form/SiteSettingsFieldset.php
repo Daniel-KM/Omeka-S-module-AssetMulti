@@ -89,6 +89,18 @@ class SiteSettingsFieldset extends Fieldset
                 ],
             ])
             ->add([
+                'name' => 'assetmulti_fallback_thumbnail',
+                'type' => \Laminas\Form\Element\Checkbox::class,
+                'options' => [
+                    'element_group' => 'resources',
+                    'label' => 'Complementary asset: Fall back to resource thumbnail', // @translate
+                    'info' => 'When no asset of the configured type exists, display the resource thumbnail instead.', // @translate
+                ],
+                'attributes' => [
+                    'id' => 'assetmulti_fallback_thumbnail',
+                ],
+            ])
+            ->add([
                 'name' => 'assetmulti_type_digital_objects_show',
                 'type' => CommonElement\OptionalSelect::class,
                 'options' => [

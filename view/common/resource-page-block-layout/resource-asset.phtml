@@ -23,7 +23,23 @@ if (!$type):
 endif;
 
 $asset = $this->assetResource($resource, $type);
-if (!$asset):
+
+$thumbnailUrl = null;
+if ($asset):
+    $thumbnailUrl = $asset->assetUrl();
+elseif ($siteSettings->get('assetmulti_fallback_thumbnail')):
+    $thumbnail = $resource->thumbnail();
+    if ($thumbnail):
+        $thumbnailUrl = $thumbnail->assetUrl();
+    else:
+        $primaryMedia = $resource->primaryMedia();
+        if ($primaryMedia):
+            $thumbnailUrl = $primaryMedia->thumbnailUrl('large');
+        endif;
+    endif;
+endif;
+
+if (!$thumbnailUrl):
     return;
 endif;
 
@@ -31,11 +47,11 @@ $escape = $this->plugin('escapeHtml');
 $escapeAttr = $this->plugin('escapeHtmlAttr');
 $settings = $services->get('Omeka\Settings');
 $banners = $settings->get('assetmulti_banners') ?: [];
-$label = $banners[$type] ?? $type;
+$label = $asset ? ($banners[$type] ?? $type) : $resource->displayTitle();
 ?>
 
 <div class="block block-resource block-resource-asset">
-    <a href="<?= $escapeAttr($asset->assetUrl()) ?>">
-        <img src="<?= $escapeAttr($asset->assetUrl()) ?>" alt="<?= $escape($label) ?>">
+    <a href="<?= $escapeAttr($thumbnailUrl) ?>">
+        <img src="<?= $escapeAttr($thumbnailUrl) ?>" alt="<?= $escape($label) ?>">
     </a>
 </div>

@@ -52,6 +52,7 @@ return [
     ],
     'assetmulti' => [
         'site_settings' => [
+            'assetmulti_fallback_thumbnail' => false,
             'assetmulti_type_items_browse' => '',
             'assetmulti_type_items_show' => '',
             'assetmulti_type_media_show' => '',
