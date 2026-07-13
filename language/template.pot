@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-07 00:00+0000\n"
+"POT-Creation-Date: 2026-07-13 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,106 +17,150 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/scripts/upgrade.php:39 Module.php:79
+#: data/scripts/upgrade.php:39 Module.php:80
 #, php-format
 msgid "The module %1$s should be upgraded to version %2$s or later."
 msgstr ""
 
-#: Module.php:105
+#: data/scripts/upgrade.php:43
+msgid "Missing requirement. Unable to upgrade."
+msgstr ""
+
+#: Module.php:484
+msgid "Complementary thumbnail {index}"
+msgstr ""
+
+#: Module.php:551
+msgid "Complementary assets"
+msgstr ""
+
+#: data/scripts/upgrade.php:58
+msgid "{count} complementary assets with invalid types were removed."
+msgstr ""
+
+#: Module.php:106
 msgid "To get multiple assets for a resource:"
 msgstr ""
 
-#: Module.php:107
+#: Module.php:108
 msgid "First, define wanted asset type names in {link}main settings{link_end}."
 msgstr ""
 
-#: Module.php:114
+#: Module.php:115
 msgid ""
 "Second, add new assets to resources in the tab \"advanced\" of the {link}"
 "resource form{link_end}."
 msgstr ""
 
-#: Module.php:121
+#: Module.php:122
 msgid "Third, adapt the site theme to use new resource assets."
 msgstr ""
 
-#: Module.php:317
+#: Module.php:335
 msgid ""
 "Some complementary assets were removed because the type is missing or "
 "duplicated."
 msgstr ""
 
-#: Module.php:325
-msgid ""
-"Some complementary assets were removed because the types {types} are not in "
-"the list of allowed types."
-msgstr ""
-
-#: Module.php:376
+#: Module.php:388
 msgid ""
 "Some complementary assets were not attached. Check data or ask an "
 "administrator. {msg}"
 msgstr ""
 
-#: Module.php:380
+#: Module.php:392
 msgid "[Asset Multi] Some complementary assets were not attached: {msg}"
 msgstr ""
 
-#: Module.php:510
-msgid "Complementary thumbnails"
-msgstr ""
-
-#: Module.php:510
-msgid "Complementary assets"
-msgstr ""
-
+#: src/Form/SiteSettingsFieldset.php:10 src/Form/SiteSettingsFieldset.php:13
 #: src/Form/SettingsFieldset.php:10
 msgid "Resource assets"
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:31
+msgid "Complementary asset: Asset type for items browse"
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:44
+msgid "Complementary asset: Asset type for items show"
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:57
+msgid "Complementary asset: Asset type for media show"
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:70
+msgid "Complementary asset: Asset type for item sets browse"
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:83
+msgid "Complementary asset: Asset type for item sets show"
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:96
+msgid "Complementary asset: Fall back to resource thumbnail"
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:97
+msgid ""
+"When no asset of the configured type exists, display the resource thumbnail "
+"instead."
+msgstr ""
+
+#: src/Form/SiteSettingsFieldset.php:108
+msgid "Complementary asset: Asset type for digital objects show"
 msgstr ""
 
 #: src/Form/SettingsFieldset.php:22
 msgid "Types and labels to attach multiple assets by resource"
 msgstr ""
 
-#: src/Api/Adapter/ResourceAssetAdapter.php:104
+#: src/Api/Adapter/ResourceAssetAdapter.php:103
 msgid "An asset for resource must have a resource."
 msgstr ""
 
-#: src/Api/Adapter/ResourceAssetAdapter.php:107
+#: src/Api/Adapter/ResourceAssetAdapter.php:106
 msgid "An asset for resource must have an asset."
 msgstr ""
 
-#: src/Api/Adapter/ResourceAssetAdapter.php:111
+#: src/Api/Adapter/ResourceAssetAdapter.php:110
 msgid "An asset for resource must have a type."
 msgstr ""
 
-#: src/Api/Adapter/ResourceAssetAdapter.php:173
 #: src/Api/Adapter/ResourceAssetAdapter.php:176
 msgid "The resource cannot be empty."
 msgstr ""
 
-#: src/Api/Adapter/ResourceAssetAdapter.php:180
+#: src/Api/Adapter/ResourceAssetAdapter.php:179
+msgid "The asset cannot be empty."
+msgstr ""
+
+#: src/Api/Adapter/ResourceAssetAdapter.php:183
 msgid "The type cannot be empty."
 msgstr ""
 
-#: src/Api/Adapter/ResourceAssetAdapter.php:188
+#: src/Api/Adapter/ResourceAssetAdapter.php:191
 msgid ""
 "The type \"{type}\" is not unique for the pair resource {resource_id} and "
 "asset {asset_id}."
 msgstr ""
 
-#: config/module.config.php:48
+#: src/Site/ResourcePageBlockLayout/ResourceAsset.php:13
+msgid "Complementary asset"
+msgstr ""
+
+#: config/module.config.php:68
 msgid "Search results"
 msgstr ""
 
-#: config/module.config.php:51
+#: config/module.config.php:71
 msgid "Large"
 msgstr ""
 
-#: config/module.config.php:53
+#: config/module.config.php:73
 msgid "Midsized"
 msgstr ""
 
-#: config/module.config.php:54
+#: config/module.config.php:74
 msgid "Square"
 msgstr ""

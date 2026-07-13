@@ -2,32 +2,49 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-07 00:00+0000\n"
-"PO-Revision-Date: 2025-07-07 00:00+0000\n"
+"POT-Creation-Date: 2026-07-13 00:00+0000\n"
+"PO-Revision-Date: 2026-07-13 00:00+0000\n"
 "Last-Translator: Daniel Berthereau <Daniel.fr@Berthereau.net>\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.6\n"
 
-#: data/scripts/upgrade.php:39 Module.php:71
+#: data/scripts/upgrade.php:39 Module.php:80
 #, php-format
 msgid "The module %1$s should be upgraded to version %2$s or later."
 msgstr "Le module %1$s doit être mis à niveau à la version %2$s ou supérieure."
 
-#: Module.php:97
+#: data/scripts/upgrade.php:43
+msgid "Missing requirement. Unable to upgrade."
+msgstr "Pré-requis absent. Impossible de mettre à jour."
+
+#: Module.php:484
+msgid "Complementary thumbnail {index}"
+msgstr "Vignette complémentaire {index}"
+
+#: Module.php:551
+msgid "Complementary assets"
+msgstr "Fichiers complémentaires"
+
+#: data/scripts/upgrade.php:58
+msgid "{count} complementary assets with invalid types were removed."
+msgstr ""
+"{count} fichiers complémentaires avec des types incorrects ont été supprimés."
+
+#: Module.php:106
 msgid "To get multiple assets for a resource:"
 msgstr "Pour disposer de plusieurs vignettes pour une ressource :"
 
-#: Module.php:99
+#: Module.php:108
 msgid "First, define wanted asset type names in {link}main settings{link_end}."
 msgstr ""
 "D’abord, définir les noms des types de vignettes souhaités dans les {link}"
 "paramètres généraux{link_end}."
 
-#: Module.php:106
+#: Module.php:115
 msgid ""
 "Second, add new assets to resources in the tab \"advanced\" of the {link}"
 "resource form{link_end}."
@@ -35,11 +52,11 @@ msgstr ""
 "Ensuite, ajouter de nouveaux fichiers aux ressources dans l’onglet "
 "\"avancé\" du {link}formulaire de ressource{link_end}."
 
-#: Module.php:113
+#: Module.php:122
 msgid "Third, adapt the site theme to use new resource assets."
 msgstr "Enfin, adapter le thème du site pour utiliser les nouvelles vignettes."
 
-#: Module.php:224
+#: Module.php:335
 msgid ""
 "Some complementary assets were removed because the type is missing or "
 "duplicated."
@@ -47,15 +64,7 @@ msgstr ""
 "Certaines vignettes complémentaires ont été supprimées parce que le type est "
 "manquant ou dupliqué."
 
-#: Module.php:232
-msgid ""
-"Some complementary assets were removed because the types {types} are not in "
-"the list of allowed types."
-msgstr ""
-"Certaines vignettes complémentaires ont été supprimées car les types {types} "
-"ne figurent pas dans la liste des types autorisés."
-
-#: Module.php:283
+#: Module.php:388
 msgid ""
 "Some complementary assets were not attached. Check data or ask an "
 "administrator. {msg}"
@@ -63,50 +72,82 @@ msgstr ""
 "Certaines vignettes complémentaires n’ont pas été attachées. Vérifiez les "
 "données ou demandez à un administrateur. {msg}"
 
-#: Module.php:287
+#: Module.php:392
 msgid "[Asset Multi] Some complementary assets were not attached: {msg}"
 msgstr ""
 "[Asset Multi] Certaines vignettes complémentaires n’ont pas été attachées : "
 "{msg}"
 
-#: Module.php:415
-msgid "Complementary thumbnails"
-msgstr "Vignettes complémentaires"
-
-#: Module.php:415
-msgid "Complementary assets"
-msgstr "Fichiers complémentaires"
-
+#: src/Form/SiteSettingsFieldset.php:10 src/Form/SiteSettingsFieldset.php:13
 #: src/Form/SettingsFieldset.php:10
 msgid "Resource assets"
 msgstr "Vignettes des ressources"
+
+#: src/Form/SiteSettingsFieldset.php:31
+msgid "Complementary asset: Asset type for items browse"
+msgstr "Fichier complémentaire : Type de fichier pour la liste de contenus"
+
+#: src/Form/SiteSettingsFieldset.php:44
+msgid "Complementary asset: Asset type for items show"
+msgstr "Fichier complémentaire : Type de fichier pour la vue contenu"
+
+#: src/Form/SiteSettingsFieldset.php:57
+msgid "Complementary asset: Asset type for media show"
+msgstr "Fichier complémentaire : Type de fichier pour la vue media"
+
+#: src/Form/SiteSettingsFieldset.php:70
+msgid "Complementary asset: Asset type for item sets browse"
+msgstr "Fichier complémentaire : Type de fichier pour la liste des collections"
+
+#: src/Form/SiteSettingsFieldset.php:83
+msgid "Complementary asset: Asset type for item sets show"
+msgstr "Fichier complémentaire : Type de fichier pour la vue collection"
+
+#: src/Form/SiteSettingsFieldset.php:96
+msgid "Complementary asset: Fall back to resource thumbnail"
+msgstr "Fichier complémentaire : Utiliser la vignette de la ressource"
+
+#: src/Form/SiteSettingsFieldset.php:97
+msgid ""
+"When no asset of the configured type exists, display the resource thumbnail "
+"instead."
+msgstr ""
+"Quand aucun fichier n’existe pour les types configurés, affiche la vignette "
+"de la ressource à la place."
+
+#: src/Form/SiteSettingsFieldset.php:108
+msgid "Complementary asset: Asset type for digital objects show"
+msgstr "Afficher le type de ressource pour les objets numériques"
 
 #: src/Form/SettingsFieldset.php:22
 msgid "Types and labels to attach multiple assets by resource"
 msgstr "Types et libellés des vignettes attachées aux ressources"
 
-#: src/Api/Adapter/ResourceAssetAdapter.php:104
+#: src/Api/Adapter/ResourceAssetAdapter.php:103
 msgid "An asset for resource must have a resource."
 msgstr "Une vignette pour une ressource doit avoir une ressource."
 
-#: src/Api/Adapter/ResourceAssetAdapter.php:107
+#: src/Api/Adapter/ResourceAssetAdapter.php:106
 msgid "An asset for resource must have an asset."
 msgstr "Une vignette pour une ressource doit avoir une vignette."
 
-#: src/Api/Adapter/ResourceAssetAdapter.php:111
+#: src/Api/Adapter/ResourceAssetAdapter.php:110
 msgid "An asset for resource must have a type."
 msgstr "Une vignette pour une ressource doit avoir un type."
 
-#: src/Api/Adapter/ResourceAssetAdapter.php:173
 #: src/Api/Adapter/ResourceAssetAdapter.php:176
 msgid "The resource cannot be empty."
 msgstr "La ressource ne peut pas être vide."
 
-#: src/Api/Adapter/ResourceAssetAdapter.php:180
+#: src/Api/Adapter/ResourceAssetAdapter.php:179
+msgid "The asset cannot be empty."
+msgstr "Le fichier ne peut pas être vide."
+
+#: src/Api/Adapter/ResourceAssetAdapter.php:183
 msgid "The type cannot be empty."
 msgstr "Le type ne peut pas être vide."
 
-#: src/Api/Adapter/ResourceAssetAdapter.php:188
+#: src/Api/Adapter/ResourceAssetAdapter.php:191
 msgid ""
 "The type \"{type}\" is not unique for the pair resource {resource_id} and "
 "asset {asset_id}."
@@ -114,29 +155,38 @@ msgstr ""
 "Le type \"{type}\" n’est pas unique pour la paire ressource {resource_id} et "
 "vignette {asset_id}."
 
-#: config/module.config.php:46
-msgid "Home"
-msgstr "Accueil"
+#: src/Site/ResourcePageBlockLayout/ResourceAsset.php:13
+msgid "Complementary asset"
+msgstr "Fichier complémentaire"
 
-#: config/module.config.php:47
-msgid "Item set page"
-msgstr "Page de collection"
-
-#: config/module.config.php:48
+#: config/module.config.php:68
 msgid "Search results"
 msgstr "Résultats de recherche"
 
-#: config/module.config.php:51
+#: config/module.config.php:71
 msgid "Large"
 msgstr "Large"
 
-#: config/module.config.php:53
+#: config/module.config.php:73
 msgid "Midsized"
 msgstr "Moyen"
 
-#: config/module.config.php:54
+#: config/module.config.php:74
 msgid "Square"
 msgstr "Carré"
+
+#~ msgid ""
+#~ "Some complementary assets were removed because the types {types} are not "
+#~ "in the list of allowed types."
+#~ msgstr ""
+#~ "Certaines vignettes complémentaires ont été supprimées car les types "
+#~ "{types} ne figurent pas dans la liste des types autorisés."
+
+#~ msgid "Home"
+#~ msgstr "Accueil"
+
+#~ msgid "Item set page"
+#~ msgstr "Page de collection"
 
 #~ msgid "Sidebar"
 #~ msgstr "Barre de côté"
