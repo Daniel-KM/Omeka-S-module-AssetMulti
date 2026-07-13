@@ -1,0 +1,41 @@
+<?php
+/**
+ * @var \Laminas\View\Renderer\PhpRenderer $this
+ * @var \Omeka\Api\Representation\AbstractResourceEntityRepresentation $resource
+ */
+
+$services = $this->getHelperPluginManager()->getServiceLocator();
+$easyMeta = $services->get('Common\EasyMeta');
+$siteSettings = $services->get('Omeka\Settings\Site');
+
+$resourceName = $easyMeta->resourceName($resource->resourceName());
+$settingMap = [
+    'items' => 'assetmulti_type_items_show',
+    'media' => 'assetmulti_type_media_show',
+    'item_sets' => 'assetmulti_type_item_sets_show',
+    'digital_objects' => 'assetmulti_type_digital_objects_show',
+];
+
+$settingKey = $settingMap[$resourceName] ?? null;
+$type = $settingKey ? $siteSettings->get($settingKey, '') : '';
+if (!$type):
+    return;
+endif;
+
+$asset = $this->assetResource($resource, $type);
+if (!$asset):
+    return;
+endif;
+
+$escape = $this->plugin('escapeHtml');
+$escapeAttr = $this->plugin('escapeHtmlAttr');
+$settings = $services->get('Omeka\Settings');
+$banners = $settings->get('assetmulti_banners') ?: [];
+$label = $banners[$type] ?? $type;
+?>
+
+<div class="block block-resource block-resource-asset">
+    <a href="<?= $escapeAttr($asset->assetUrl()) ?>">
+        <img src="<?= $escapeAttr($asset->assetUrl()) ?>" alt="<?= $escape($label) ?>">
+    </a>
+</div>

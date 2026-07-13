@@ -16,6 +16,11 @@ return [
             dirname(__DIR__) . '/data/doctrine-proxies',
         ],
     ],
+    'view_manager' => [
+        'template_path_stack' => [
+            dirname(__DIR__) . '/view',
+        ],
+    ],
     'view_helpers' => [
         'invokables' => [
             'assetResource' => View\Helper\AssetResource::class,
@@ -27,6 +32,12 @@ return [
         ],
         'factories' => [
             Form\AssetTypeFieldset::class => Service\Form\AssetTypeFieldsetFactory::class,
+            Form\SiteSettingsFieldset::class => Service\Form\SiteSettingsFieldsetFactory::class,
+        ],
+    ],
+    'resource_page_block_layouts' => [
+        'invokables' => [
+            'resourceAsset' => Site\ResourcePageBlockLayout\ResourceAsset::class,
         ],
     ],
     'translator' => [
@@ -40,6 +51,14 @@ return [
         ],
     ],
     'assetmulti' => [
+        'site_settings' => [
+            'assetmulti_type_items_browse' => '',
+            'assetmulti_type_items_show' => '',
+            'assetmulti_type_media_show' => '',
+            'assetmulti_type_item_sets_browse' => '',
+            'assetmulti_type_item_sets_show' => '',
+            'assetmulti_type_digital_objects_show' => '',
+        ],
         'settings' => [
             'assetmulti_banners' => [
                 // These types are the default ones, they can be replaced.
