@@ -9,7 +9,7 @@ Asset Multi (module for Omeka S)
 (thumbnails) to resources, for example to display an horizontal banner in home
 page, a skyscraper in another page and a square in lists.
 
-No derivative thubmnails are created: each asset should be attached manually or
+No derivative thumbnails are created: each asset should be attached manually or
 via import to resources.
 
 For now, the theme should be adapted to be display specific thumbnails, because
@@ -35,6 +35,15 @@ the module to `AssetMulti`.
 
 Then install it like any other Omeka module and follow the config instructions.
 
+* For test
+
+The module includes a comprehensive test suite with unit and functional tests.
+Run them from the root of Omeka:
+
+```sh
+vendor/bin/phpunit -c modules/AssetMulti/phpunit.xml --testdox
+```
+
 
 Usage
 -----
@@ -43,7 +52,8 @@ First, set the list of types in main settings. A default list is provided, but
 it can be replaced by any pair of type/label. The types "default" and "original"
 are reserved for future purpose.
 
-Add new assets in the tab "Advanced" of the resource (item, item set or media).
+Add new assets in the tab "Advanced" of the resource (item, item set, media, or
+[digital object].
 Warning: a resource can only have one asset by type.
 
 To use them in themes for now, the theme should be adapted. So use the view
@@ -76,12 +86,12 @@ foreach ($resourceAssets as $resourceAsset) {
 TODO
 ----
 
-- [ ] Store default asset (resource thumbnail id) with other assets with type "default" or "original".
-- [ ] Add resource and page blocks.
-- [ ] Add handlers and site/theme settings to manage the type of assets automatically.
-- [ ] Use an open list of types in the advanced tab, so the user can add any specific type for an asset.
-- [ ] Display a link to all resources with a specific assets in admin / assets.
+- [x] Add resource page block.
+- [x] Add site settings to configure which asset type to display per page context.
+- [x] Use an open list of types in the advanced tab, so the user can add any specific type for an asset.
+- [x] Display a link to all resources with a specific assets in admin / assets.
 - [-] Allow multiple assets by resource with the same type. No: the use cases are a lot less than one asset by type.
+- [-] Store default asset (resource thumbnail id) with other assets with type "default" or "original". Useless: it will create duplicate for o:thumbnail.
 
 
 Warning
@@ -132,18 +142,19 @@ of the CeCILL license and that you accept its terms.
 Copyright
 ---------
 
-* Copyright Daniel Berthereau, 2024-2025 (see [Daniel-KM] on GitLab)
+* Copyright Daniel Berthereau, 2024-2026 (see [Daniel-KM] on GitLab)
 
 This module was built for the migration of the digital library [Collections]
-of the [Musée de Bretagne], currently under a non-free software.
+of the [Musée de Bretagne], previously under a non-free software.
 
 
 [Asset Multi]: https://gitlab.com/Daniel-KM/Omeka-S-module-AssetMulti
 [Omeka S]: https://omeka.org/s
 [installing a module]: https://omeka.org/s/docs/user-manual/modules/
-[AssetMulti.zip]: https://github.com/Daniel-KM/Omeka-S-module-AssetMulti/releases
+[AssetMulti.zip]: https://gitlab.com/Daniel-KM/Omeka-S-module-AssetMulti/-/releases
 [module issues]: https://gitlab.com/Daniel-KM/Omeka-S-module-AssetMulti/issues
 [Common]: https://gitlab.com/Daniel-KM/Omeka-S-module-Common
+[digital object]: https://gitlab.com/Daniel-KM/Omeka-S-module-DigitalObject
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
 [GNU/GPL]: https://www.gnu.org/licenses/gpl-3.0.html
 [FSF]: https://www.fsf.org
