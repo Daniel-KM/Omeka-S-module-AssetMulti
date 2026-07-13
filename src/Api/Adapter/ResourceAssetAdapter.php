@@ -87,12 +87,11 @@ class ResourceAssetAdapter extends AbstractEntityAdapter
             if ($ids) {
                 $qb->andWhere($qb->expr()->in(
                     'omeka_root.type',
-// TODO
-                    $this->createTypedParameter($qb, $ids)
+                    $this->createNamedParameter($qb, $ids)
                 ));
             } else {
-                // Avoid an issue with a asset_id is set in query but empty.
-                $qb->andWhere($expr->eq('omeka_root.asset', -1));
+                // Avoid an issue with a type is set in query but empty.
+                $qb->andWhere($expr->eq('omeka_root.id', -1));
             }
         }
     }
@@ -131,11 +130,13 @@ class ResourceAssetAdapter extends AbstractEntityAdapter
                 } elseif ($data['o:resource'] instanceof \Omeka\Api\Representation\AbstractResourceEntityRepresentation) {
                     $resource = $this->getAdapter('resources')->findEntity($data['o:resource']->id());
                 } elseif ($data['o:resource'] instanceof \Omeka\Entity\Resource) {
-                    // Nothing to do.
+                    $resource = $data['o:resource'];
                 } else {
                     $resource = null;
                 }
-                $entity->setResource($resource);
+                if ($resource) {
+                    $entity->setResource($resource);
+                }
             }
         }
 
@@ -148,11 +149,13 @@ class ResourceAssetAdapter extends AbstractEntityAdapter
                 } elseif ($data['o:asset'] instanceof \Omeka\Api\Representation\AssetRepresentation) {
                     $asset = $this->getAdapter('assets')->findEntity($data['o:asset']->id());
                 } elseif ($data['o:asset'] instanceof \Omeka\Entity\Asset) {
-                    // Nothing to do.
+                    $asset = $data['o:asset'];
                 } else {
                     $asset = null;
                 }
-                $entity->setAsset($asset);
+                if ($asset) {
+                    $entity->setAsset($asset);
+                }
             }
         }
 
@@ -173,7 +176,7 @@ class ResourceAssetAdapter extends AbstractEntityAdapter
             $errorStore->addError('o:resource', 'The resource cannot be empty.'); // @translate
         }
         if (!$asset) {
-            $errorStore->addError('o:asset', 'The resource cannot be empty.'); // @translate
+            $errorStore->addError('o:asset', 'The asset cannot be empty.'); // @translate
         }
         $hasType = $type !== null && $type !== '';
         if (!$hasType) {
@@ -186,7 +189,7 @@ class ResourceAssetAdapter extends AbstractEntityAdapter
         ])) {
             $errorStore->addError('o:type', new PsrMessage(
                 'The type "{type}" is not unique for the pair resource {resource_id} and asset {asset_id}.', // @translate
-                ['type' => $type, 'resource' => $resource->getId(), 'asset' => $asset->getId()]
+                ['type' => $type, 'resource_id' => $resource->getId(), 'asset_id' => $asset->getId()]
             ));
         }
     }

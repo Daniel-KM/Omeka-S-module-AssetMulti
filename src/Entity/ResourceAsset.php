@@ -33,8 +33,7 @@ class ResourceAsset extends AbstractEntity
      * @var \Omeka\Entity\Resource
      *
      * @ManyToOne(
-     *     targetEntity="Omeka\Entity\Resource",
-     *     inversedBy="resourceAssets"
+     *     targetEntity="Omeka\Entity\Resource"
      * )
      * @JoinColumn(
      *     name="resource_id",
@@ -49,8 +48,7 @@ class ResourceAsset extends AbstractEntity
      * @var \Omeka\Entity\Asset
      *
      * @ManyToOne(
-     *     targetEntity="Omeka\Entity\Asset",
-     *     inversedBy="resourceAssets"
+     *     targetEntity="Omeka\Entity\Asset"
      * )
      * @JoinColumn(
      *     name="asset_id",

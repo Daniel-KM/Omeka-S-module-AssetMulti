@@ -214,12 +214,16 @@ class Module extends AbstractModule
             \Omeka\Api\Adapter\ItemAdapter::class => 'Omeka\Controller\Admin\Item',
             \Omeka\Api\Adapter\MediaAdapter::class => 'Omeka\Controller\Admin\Media',
             \Omeka\Api\Adapter\ItemSetAdapter::class => 'Omeka\Controller\Admin\ItemSet',
-            // \Annotate\Api\Adapter\AnnotationAdapter::class => \Annotate\Controller\Admin\AnnotationController::class,
+            // \Annotate\Api\Adapter\AnnotationAdapter::class =>
+            // \Annotate\Controller\Admin\AnnotationController::class,
         ];
+        if (class_exists('DigitalObject\Module', false)) {
+            $adaptersAndControllers[\DigitalObject\Api\Adapter\DigitalObjectAdapter::class] = 'DigitalObject\Controller\Admin\DigitalObject';
+        }
         foreach ($adaptersAndControllers as $adapter => $controller) {
             // Avoid to do something during batch process.
             $sharedEventManager->attach(
-                \Omeka\Api\Adapter\ItemAdapter::class,
+                $adapter,
                 'api.batch_update.pre',
                 [$this, 'preBatchUpdateResource'],
                 -100
@@ -428,7 +432,7 @@ class Module extends AbstractModule
             $resourceName = $easyMeta->resourceName($resourceType);
             if ($resourceId && $resourceName) {
                 try {
-                    $resource = $api->read($resourceType, $resourceId)->getContent();
+                    $resource = $api->read($resourceName, $resourceId)->getContent();
                 } catch (\Omeka\Api\Exception\NotFoundException $e) {
                     $resource = null;
                 }
