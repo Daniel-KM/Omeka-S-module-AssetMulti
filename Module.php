@@ -107,14 +107,14 @@ class Module extends AbstractModule
         $context['message_2'] = new PsrMessage(
             'First, define wanted asset type names in {link}main settings{link_end}.', // @translate
             [
-                'link' => sprintf('<a href="%s">', $url('admin/default', ['controller' => 'setting', 'action' => 'browse'], ['fragment' => 'resource'])),
+                'link' => sprintf('<a href="%s">', htmlspecialchars($url('admin/default', ['controller' => 'setting', 'action' => 'browse'], ['fragment' => 'resource']))),
                 'link_end' => '</a>',
             ]
         );
         $context['message_3'] = new PsrMessage(
             'Second, add new assets to resources in the tab "advanced" of the {link}resource form{link_end}.', // @translate
             [
-                'link' => sprintf('<a href="%s">', $url('admin/default', ['controller' => 'item', 'action' => 'add'], ['fragment' => 'advanced-settings'])),
+                'link' => sprintf('<a href="%s">', htmlspecialchars($url('admin/default', ['controller' => 'item', 'action' => 'add'], ['fragment' => 'advanced-settings']))),
                 'link_end' => '</a>',
             ]
         );
