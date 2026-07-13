@@ -3,7 +3,7 @@
 namespace AssetMulti\Service\Form;
 
 use AssetMulti\Form\AssetTypeFieldset;
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
 class AssetTypeFieldsetFactory implements FactoryInterface
