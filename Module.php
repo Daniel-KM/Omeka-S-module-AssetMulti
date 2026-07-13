@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 /*
- * Copyright 2024-2025 Daniel Berthereau
+ * Copyright 2024-2026 Daniel Berthereau
  *
  * This software is governed by the CeCILL license under French law and abiding
  * by the rules of distribution of free software. You can use, modify and/or
@@ -50,7 +50,7 @@ use Omeka\Module\AbstractModule;
 /**
  * Asset Multi.
  *
- * @copyright Daniel Berthereau, 2024-2025
+ * @copyright Daniel Berthereau, 2024-2026
  * @license http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
  */
 class Module extends AbstractModule
@@ -73,11 +73,11 @@ class Module extends AbstractModule
     protected function preInstall(): void
     {
         $services = $this->getServiceLocator();
-        $translate = $services->get('ControllerPluginManager')->get('translate');
+        $translator = $services->get('MvcTranslator');
 
         if (!method_exists($this, 'checkModuleActiveVersion') || !$this->checkModuleActiveVersion('Common', '3.4.88')) {
             $message = new \Omeka\Stdlib\Message(
-                $translate('The module %1$s should be upgraded to version %2$s or later.'), // @translate
+                $translator->translate('The module %1$s should be upgraded to version %2$s or later.'), // @translate
                 'Common', '3.4.88'
             );
             throw new \Omeka\Module\Exception\ModuleCannotInstallException((string) $message);

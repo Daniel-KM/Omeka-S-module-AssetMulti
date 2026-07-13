@@ -39,5 +39,25 @@ if (!method_exists($this, 'checkModuleActiveVersion') || !$this->checkModuleActi
         $translate('The module %1$s should be upgraded to version %2$s or later.'), // @translate
         'Common', '3.4.88'
     );
-    throw new \Omeka\Module\Exception\ModuleCannotInstallException((string) $message);
+    $messenger->addError($message);
+    throw new \Omeka\Module\Exception\ModuleCannotInstallException((string) $translate('Missing requirement. Unable to upgrade.')); // @translate
+}
+
+if (version_compare($oldVersion, '3.4.3', '<')) {
+    // Fix: remove resource assets with types not in the configured banners
+    // (caused by array_replace bug that let unknown types through).
+    $banners = $settings->get('assetmulti_banners') ?: [];
+    if ($banners) {
+        $types = array_keys($banners);
+        $in = implode(', ', array_map([$connection, 'quote'], $types));
+        $count = $connection->executeStatement(
+            "DELETE FROM `resource_asset` WHERE `type` NOT IN ($in)"
+        );
+        if ($count) {
+            $messenger->addWarning(new PsrMessage(
+                '{count} complementary assets with invalid types were removed.', // @translate
+                ['count' => $count]
+            ));
+        }
+    }
 }
