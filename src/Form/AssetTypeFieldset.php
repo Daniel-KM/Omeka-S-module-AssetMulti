@@ -2,7 +2,7 @@
 
 namespace AssetMulti\Form;
 
-use Common\Form\Element as CommonElement;
+use Laminas\Form\Element;
 use Laminas\Form\Fieldset;
 use Omeka\Form\Element as OmekaElement;
 
@@ -23,13 +23,14 @@ class AssetTypeFieldset extends Fieldset
 
             ->add([
                 'name' => 'o:resource_asset[__index__][o:type]',
-                'type' => CommonElement\OptionalSelect::class,
+                'type' => Element\Text::class,
                 'options' => [
                     'label' => 'Type', // @translate
-                    'value_options' => $this->assetTypes,
                 ],
                 'attributes' => [
                     'id' => 'o-resource-asset-o-type',
+                    'list' => 'assetmulti-types',
+                    'placeholder' => 'Type',
                 ],
             ])
             ->add([

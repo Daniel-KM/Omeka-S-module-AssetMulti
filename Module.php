@@ -302,7 +302,6 @@ class Module extends AbstractModule
         $resourceData = $request->getContent();
 
         $banners = $settings->get('assetmulti_banners') ?: [];
-        $banners = array_fill_keys(array_keys($banners), null);
 
         // This is an api-post event, so id is ready and checks are done.
         $resource = $event->getParam('response')->getContent();
@@ -323,15 +322,9 @@ class Module extends AbstractModule
                 'Some complementary assets were removed because the type is missing or duplicated.') // @translate
             );
         }
-        // Fourth, keep only defined banners. And set order defined in settings.
-        $tmpAssets = $newAssets;
-        $newAssets = array_filter(array_intersect_key(array_replace($banners, $newAssets), $banners));
-        if (count($newAssets) !== count($tmpAssets)) {
-            $messenger->addWarning(new PsrMessage(
-                'Some complementary assets were removed because the types {types} are not in the list of allowed types.', // @translate
-                ['types' => implode(', ', array_keys(array_diff_key($tmpAssets, $banners)))]
-            ));
-        }
+        // Fourth, set order: predefined banners first, then custom types.
+        $ordered = array_fill_keys(array_keys($banners), null);
+        $newAssets = array_filter(array_replace($ordered, $newAssets));
 
         // Fill all resource assets independantly of the existing ones in order
         // to keep ids, removing the remaining or creating new ones.
@@ -498,6 +491,15 @@ class Module extends AbstractModule
         }
 
         echo $view->formCollection($collection, true);
+
+        // Render the datalist for type suggestions.
+        $escape = $view->plugin('escapeHtml');
+        $datalist = '<datalist id="assetmulti-types">';
+        foreach ($banners as $type => $label) {
+            $datalist .= sprintf('<option value="%s">%s</option>', $escape($type), $escape($label));
+        }
+        $datalist .= '</datalist>';
+        echo $datalist;
     }
 
     public function handleResourceDetails(Event $event): void
