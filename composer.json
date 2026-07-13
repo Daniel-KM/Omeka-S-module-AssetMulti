@@ -1,36 +1,40 @@
 {
     "name": "daniel-km/omeka-s-module-asset-multi",
-    "description": "Module for Omeka S that allows to attach multiple assets to resources, for example to display an horizontal banners in home page, a skyscraper in another page and a square in lists.",
-    "type": "library",
+    "type": "omeka-s-module",
+    "description": "Module for Omeka S: Attach multiple assets to resources, for example to display an horizontal banner in home page, a skyscraper in another page and a square in lists.",
+    "keywords": [
+        "Omeka S",
+        "Omeka S module",
+        "asset",
+        "theme building"
+    ],
     "license": "CECILL-2.1",
+    "homepage": "https://gitlab.com/Daniel-KM/Omeka-S-module-AssetMulti",
     "authors": [
         {
             "name": "Daniel Berthereau",
-            "email": "Daniel.git@Berthereau.net"
+            "email": "Daniel.packagist@Berthereau.net"
         }
     ],
-    "homepage": "https://gitlab.com/Daniel-KM/Omeka-S-module-AssetMulti",
     "support": {
         "issues": "https://gitlab.com/Daniel-KM/Omeka-S-module-AssetMulti/-/issues",
         "forum": "https://forum.omeka.org/"
     },
-    "keywords": [
-        "Omeka S",
-        "module",
-        "asset",
-        "theme building"
-    ],
-    "require-dev": {
-        "biblibre/omeka-s-test-helper": "dev-master"
+    "_require (not set until Omeka S merges PR #2432)": {
+        "omeka/omeka-s": "^4.0",
+        "daniel-km/omeka-s-module-common": "*"
     },
     "autoload": {
         "psr-4": {
-            "DanielKm\\OmekaSModuleAssetMulti\\": "src/"
+            "AssetMulti\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "AssetMultiTest\\": "test/AssetMultiTest/"
+            "AssetMultiTest\\": "tests/AssetMultiTest/"
         }
+    },
+    "extra": {
+        "installer-name": "AssetMulti"
     }
 }
