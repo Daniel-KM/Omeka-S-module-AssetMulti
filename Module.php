@@ -260,6 +260,13 @@ class Module extends AbstractModule
             );
         }
 
+        // Display linked resources in asset details sidebar.
+        $sharedEventManager->attach(
+            'Omeka\Controller\Admin\Asset',
+            'view.details',
+            [$this, 'handleAssetDetails']
+        );
+
         // Handle main settings.
         $sharedEventManager->attach(
             \Omeka\Form\SettingForm::class,
@@ -538,6 +545,60 @@ class Module extends AbstractModule
         $html = '<li>' . implode("</li>\n<li>", $html) . '</li>';
 
         return <<<HTML
+            <div class="meta-group">
+                <h4>$title</h4>
+                <div class="value"><ul>
+                    $html
+                </ul></div>
+            </div>
+            HTML;
+    }
+
+    public function handleAssetDetails(Event $event): void
+    {
+        /**
+         * @var \Omeka\Api\Representation\AssetRepresentation $asset
+         * @var \Omeka\Api\Manager $api
+         */
+        $services = $this->getServiceLocator();
+        $api = $services->get('Omeka\ApiManager');
+        $plugins = $services->get('ViewHelperManager');
+
+        $asset = $event->getParam('entity');
+        $assetId = $asset->id();
+
+        /** @var \AssetMulti\Api\Representation\ResourceAssetRepresentation[] $resourceAssets */
+        $resourceAssets = $api->search('resource_assets', [
+            'asset_id' => $assetId,
+            'limit' => 25,
+        ])->getContent();
+
+        if (!$resourceAssets) {
+            return;
+        }
+
+        $escape = $plugins->get('escapeHtml');
+        $translate = $plugins->get('translate');
+        $settings = $services->get('Omeka\Settings');
+        $banners = $settings->get('assetmulti_banners') ?: [];
+
+        $title = $translate('Linked resources'); // @translate
+
+        $html = [];
+        foreach ($resourceAssets as $resourceAsset) {
+            $resource = $resourceAsset->resource();
+            $type = $resourceAsset->type();
+            $label = $banners[$type] ?? $type;
+            $html[] = sprintf(
+                '<a href="%s">%s</a> <span class="o-icon-info" title="%s"></span>',
+                $escape($resource->adminUrl()),
+                $escape($resource->displayTitle()),
+                $escape($label)
+            );
+        }
+        $html = '<li>' . implode("</li>\n<li>", $html) . '</li>';
+
+        echo <<<HTML
             <div class="meta-group">
                 <h4>$title</h4>
                 <div class="value"><ul>
