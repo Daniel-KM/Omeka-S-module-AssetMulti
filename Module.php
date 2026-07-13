@@ -318,7 +318,7 @@ class Module extends AbstractModule
         }
         // Fourth, keep only defined banners. And set order defined in settings.
         $tmpAssets = $newAssets;
-        $newAssets = array_filter(array_replace($banners, $newAssets));
+        $newAssets = array_filter(array_intersect_key(array_replace($banners, $newAssets), $banners));
         if (count($newAssets) !== count($tmpAssets)) {
             $messenger->addWarning(new PsrMessage(
                 'Some complementary assets were removed because the types {types} are not in the list of allowed types.', // @translate
