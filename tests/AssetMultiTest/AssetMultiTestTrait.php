@@ -32,6 +32,11 @@ trait AssetMultiTestTrait
      */
     protected $createdDigitalObjects = [];
 
+    /**
+     * @var array
+     */
+    protected $createdConcepts = [];
+
     protected function api(): ApiManager
     {
         return $this->getServiceLocator()->get('Omeka\ApiManager');
@@ -186,6 +191,49 @@ trait AssetMultiTestTrait
             ->getRepresentation($digitalObject);
     }
 
+    protected function hasThesaurus(): bool
+    {
+        return class_exists('Thesaurus\Module', false);
+    }
+
+    /**
+     * Create a concept directly with the entity manager.
+     *
+     * A concept requires a scheme, that is a standard item.
+     */
+    protected function createConcept(string $title = 'Test concept')
+    {
+        $entityManager = $this->getEntityManager();
+        $easyMeta = $this->getServiceLocator()->get('Common\EasyMeta');
+
+        $scheme = $this->createItem('Test scheme');
+        $schemeEntity = $entityManager->find(\Omeka\Entity\Item::class, $scheme->id());
+
+        $concept = new \Thesaurus\Entity\Concept();
+        $concept->setOwner($this->getCurrentUser());
+        $concept->setIsPublic(true);
+        $concept->setCreated(new \DateTime('now'));
+        $concept->setScheme($schemeEntity);
+        $entityManager->persist($concept);
+        $entityManager->flush();
+
+        $value = new \Omeka\Entity\Value();
+        $value->setResource($concept);
+        $value->setProperty($entityManager->find(\Omeka\Entity\Property::class, $easyMeta->propertyId('skos:prefLabel') ?: $easyMeta->propertyId('dcterms:title')));
+        $value->setType('literal');
+        $value->setValue($title);
+        $value->setIsPublic(true);
+        $entityManager->persist($value);
+        $entityManager->flush();
+
+        $this->createdConcepts[] = $concept->getId();
+
+        return $this->getServiceLocator()
+            ->get('Omeka\ApiAdapterManager')
+            ->get('concepts')
+            ->getRepresentation($concept);
+    }
+
     protected function cleanupResources(): void
     {
         $entityManager = $this->getEntityManager();
@@ -210,6 +258,17 @@ trait AssetMultiTestTrait
             }
         }
         $this->createdDigitalObjects = [];
+
+        foreach ($this->createdConcepts as $conceptId) {
+            try {
+                $connection->executeStatement('DELETE FROM `value` WHERE `resource_id` = ?', [$conceptId]);
+                $connection->executeStatement('DELETE FROM `concept` WHERE `id` = ?', [$conceptId]);
+                $connection->executeStatement('DELETE FROM `resource` WHERE `id` = ?', [$conceptId]);
+            } catch (\Exception $e) {
+                // Already removed.
+            }
+        }
+        $this->createdConcepts = [];
 
         foreach ($this->createdAssets as $assetId) {
             try {

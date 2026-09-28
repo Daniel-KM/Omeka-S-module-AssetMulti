@@ -13,6 +13,7 @@ require dirname(__DIR__, 3) . '/modules/Common/tests/Bootstrap.php';
         'Common',
         'AssetMulti',
         '?DigitalObject',
+        '?Thesaurus',
     ],
     'AssetMultiTest',
     __DIR__ . '/AssetMultiTest'

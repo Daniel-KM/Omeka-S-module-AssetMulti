@@ -121,7 +121,55 @@ class ModuleTest extends AbstractHttpControllerTestCase
     /**
      * @return \Omeka\Api\Representation\ItemRepresentation
      */
-    protected function createItemWithAssets(array $resourceAssets)
+    /**
+     * The form posts the pairs as a string "type = asset id" by line.
+     */
+    public function testCreateResourceWithAssetsAsTextarea(): void
+    {
+        $asset = $this->createAsset();
+        $otherAsset = $this->createAsset('Other asset');
+
+        $item = $this->createItemWithAssets(
+            sprintf("square = %d\nmedium = %d\n", $asset->id(), $otherAsset->id())
+        );
+
+        $resourceAssets = $this->resourceAssetsByType($item->id());
+
+        $this->assertCount(2, $resourceAssets);
+        $this->assertSame($asset->id(), $resourceAssets['square']);
+        $this->assertSame($otherAsset->id(), $resourceAssets['medium']);
+    }
+
+    public function testCreateResourceWithAssetsAsTextareaSkipsIncompleteLines(): void
+    {
+        $asset = $this->createAsset();
+
+        $item = $this->createItemWithAssets(
+            sprintf("square = %d\nmedium =\n= 12\n\n", $asset->id())
+        );
+
+        $resourceAssets = $this->resourceAssetsByType($item->id());
+
+        $this->assertCount(1, $resourceAssets);
+        $this->assertSame($asset->id(), $resourceAssets['square']);
+    }
+
+    /**
+     * A map "type => asset id" is accepted too, as an already parsed textarea.
+     */
+    public function testCreateResourceWithAssetsAsMap(): void
+    {
+        $asset = $this->createAsset();
+
+        $item = $this->createItemWithAssets(['square' => $asset->id()]);
+
+        $this->assertSame(
+            ['square' => $asset->id()],
+            $this->resourceAssetsByType($item->id())
+        );
+    }
+
+    protected function createItemWithAssets($resourceAssets)
     {
         $propertyId = $this->getServiceLocator()
             ->get('Common\EasyMeta')
