@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-13 00:00+0000\n"
-"PO-Revision-Date: 2026-07-13 00:00+0000\n"
+"POT-Creation-Date: 2026-08-31 00:00+0000\n"
+"PO-Revision-Date: 2026-08-31 00:00+0000\n"
 "Last-Translator: Daniel Berthereau <Daniel.fr@Berthereau.net>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.6\n"
 
-#: data/scripts/upgrade.php:39 Module.php:80
+#: data/scripts/upgrade.php:39 Module.php:93
 #, php-format
 msgid "The module %1$s should be upgraded to version %2$s or later."
 msgstr "Le module %1$s doit être mis à niveau à la version %2$s ou supérieure."
@@ -21,11 +21,11 @@ msgstr "Le module %1$s doit être mis à niveau à la version %2$s ou supérieur
 msgid "Missing requirement. Unable to upgrade."
 msgstr "Pré-requis absent. Impossible de mettre à jour."
 
-#: Module.php:484
+#: Module.php:500
 msgid "Complementary thumbnail {index}"
 msgstr "Vignette complémentaire {index}"
 
-#: Module.php:551
+#: Module.php:567
 msgid "Complementary assets"
 msgstr "Fichiers complémentaires"
 
@@ -34,17 +34,17 @@ msgid "{count} complementary assets with invalid types were removed."
 msgstr ""
 "{count} fichiers complémentaires avec des types incorrects ont été supprimés."
 
-#: Module.php:106
+#: Module.php:119
 msgid "To get multiple assets for a resource:"
 msgstr "Pour disposer de plusieurs vignettes pour une ressource :"
 
-#: Module.php:108
+#: Module.php:121
 msgid "First, define wanted asset type names in {link}main settings{link_end}."
 msgstr ""
 "D’abord, définir les noms des types de vignettes souhaités dans les {link}"
 "paramètres généraux{link_end}."
 
-#: Module.php:115
+#: Module.php:128
 msgid ""
 "Second, add new assets to resources in the tab \"advanced\" of the {link}"
 "resource form{link_end}."
@@ -52,11 +52,11 @@ msgstr ""
 "Ensuite, ajouter de nouveaux fichiers aux ressources dans l’onglet "
 "\"avancé\" du {link}formulaire de ressource{link_end}."
 
-#: Module.php:122
+#: Module.php:135
 msgid "Third, adapt the site theme to use new resource assets."
 msgstr "Enfin, adapter le thème du site pour utiliser les nouvelles vignettes."
 
-#: Module.php:335
+#: Module.php:351
 msgid ""
 "Some complementary assets were removed because the type is missing or "
 "duplicated."
@@ -64,7 +64,7 @@ msgstr ""
 "Certaines vignettes complémentaires ont été supprimées parce que le type est "
 "manquant ou dupliqué."
 
-#: Module.php:388
+#: Module.php:404
 msgid ""
 "Some complementary assets were not attached. Check data or ask an "
 "administrator. {msg}"
@@ -72,11 +72,15 @@ msgstr ""
 "Certaines vignettes complémentaires n’ont pas été attachées. Vérifiez les "
 "données ou demandez à un administrateur. {msg}"
 
-#: Module.php:392
+#: Module.php:408
 msgid "[Asset Multi] Some complementary assets were not attached: {msg}"
 msgstr ""
 "[Asset Multi] Certaines vignettes complémentaires n’ont pas été attachées : "
 "{msg}"
+
+#: Module.php:487
+msgid "Complementary thumbnails"
+msgstr "Vignettes complémentaires"
 
 #: src/Form/SiteSettingsFieldset.php:10 src/Form/SiteSettingsFieldset.php:13
 #: src/Form/SettingsFieldset.php:10

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-13 00:00+0000\n"
+"POT-Creation-Date: 2026-08-31 00:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/scripts/upgrade.php:39 Module.php:80
+#: data/scripts/upgrade.php:39 Module.php:93
 #, php-format
 msgid "The module %1$s should be upgraded to version %2$s or later."
 msgstr ""
@@ -26,11 +26,11 @@ msgstr ""
 msgid "Missing requirement. Unable to upgrade."
 msgstr ""
 
-#: Module.php:484
+#: Module.php:500
 msgid "Complementary thumbnail {index}"
 msgstr ""
 
-#: Module.php:551
+#: Module.php:567
 msgid "Complementary assets"
 msgstr ""
 
@@ -38,38 +38,42 @@ msgstr ""
 msgid "{count} complementary assets with invalid types were removed."
 msgstr ""
 
-#: Module.php:106
+#: Module.php:119
 msgid "To get multiple assets for a resource:"
 msgstr ""
 
-#: Module.php:108
+#: Module.php:121
 msgid "First, define wanted asset type names in {link}main settings{link_end}."
 msgstr ""
 
-#: Module.php:115
+#: Module.php:128
 msgid ""
 "Second, add new assets to resources in the tab \"advanced\" of the {link}"
 "resource form{link_end}."
 msgstr ""
 
-#: Module.php:122
+#: Module.php:135
 msgid "Third, adapt the site theme to use new resource assets."
 msgstr ""
 
-#: Module.php:335
+#: Module.php:351
 msgid ""
 "Some complementary assets were removed because the type is missing or "
 "duplicated."
 msgstr ""
 
-#: Module.php:388
+#: Module.php:404
 msgid ""
 "Some complementary assets were not attached. Check data or ask an "
 "administrator. {msg}"
 msgstr ""
 
-#: Module.php:392
+#: Module.php:408
 msgid "[Asset Multi] Some complementary assets were not attached: {msg}"
+msgstr ""
+
+#: Module.php:487
+msgid "Complementary thumbnails"
 msgstr ""
 
 #: src/Form/SiteSettingsFieldset.php:10 src/Form/SiteSettingsFieldset.php:13
