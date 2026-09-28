@@ -5,7 +5,7 @@ Asset Multi (module for Omeka S)
 > are available on [GitLab], which seems to respect users and privacy better
 > than the previous repository.__
 
-[Asset Multi ] is a module for [Omeka S] that allows to attach multiple assets
+[Asset Multi] is a module for [Omeka S] that allows to attach multiple assets
 (thumbnails) to resources, for example to display an horizontal banner in home
 page, a skyscraper in another page and a square in lists.
 
@@ -52,8 +52,8 @@ First, set the list of types in main settings. A default list is provided, but
 it can be replaced by any pair of type/label. The types "default" and "original"
 are reserved for future purpose.
 
-Add new assets in the tab "Advanced" of the resource (item, item set, media, or
-[digital object].
+Add new assets in the tab "Advanced" of the resource (item, item set, media,
+[digital object], or [thesaurus] concept).
 Warning: a resource can only have one asset by type.
 
 To use them in themes for now, the theme should be adapted. So use the view
@@ -152,9 +152,10 @@ of the [Musée de Bretagne], previously under a non-free software.
 [Omeka S]: https://omeka.org/s
 [installing a module]: https://omeka.org/s/docs/user-manual/modules/
 [AssetMulti.zip]: https://gitlab.com/Daniel-KM/Omeka-S-module-AssetMulti/-/releases
-[module issues]: https://gitlab.com/Daniel-KM/Omeka-S-module-AssetMulti/issues
+[module issues]: https://gitlab.com/Daniel-KM/Omeka-S-module-AssetMulti/-/work_items
 [Common]: https://gitlab.com/Daniel-KM/Omeka-S-module-Common
 [digital object]: https://gitlab.com/Daniel-KM/Omeka-S-module-DigitalObject
+[thesaurus]: https://gitlab.com/Daniel-KM/Omeka-S-module-Thesaurus
 [CeCILL v2.1]: https://www.cecill.info/licences/Licence_CeCILL_V2.1-en.html
 [GNU/GPL]: https://www.gnu.org/licenses/gpl-3.0.html
 [FSF]: https://www.fsf.org
