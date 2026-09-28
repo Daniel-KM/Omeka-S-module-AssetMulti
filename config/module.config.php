@@ -31,7 +31,6 @@ return [
             Form\SettingsFieldset::class => Form\SettingsFieldset::class,
         ],
         'factories' => [
-            Form\AssetTypeFieldset::class => Service\Form\AssetTypeFieldsetFactory::class,
             Form\SiteSettingsFieldset::class => Service\Form\SiteSettingsFieldsetFactory::class,
         ],
     ],

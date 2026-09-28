@@ -39,6 +39,8 @@ if (!trait_exists(\Common\TraitModule::class, false)) {
     }
 }
 
+use Common\Form\Element as CommonElement;
+use Omeka\Form\Element as OmekaElement;
 use Common\Stdlib\PsrMessage;
 use Common\TraitModule;
 use Laminas\EventManager\Event;
@@ -320,16 +322,37 @@ class Module extends AbstractModule
         $resource = $event->getParam('response')->getContent();
 
         // Add new assets and remove old ones from the resource.
-        $newAssets = $resourceData['o:resource_asset'] ?? [];
+        // The form posts one pair "type = asset id" by line, but the api may
+        // still receive a list of arrays with keys "o:type" and "o:asset", so
+        // the three possible inputs are normalized into a list of pairs.
+        $posted = $resourceData['o:resource_asset'] ?? [];
+        if (is_string($posted)) {
+            $posted = $services->get('FormElementManager')
+                ->get(CommonElement\ArrayTextarea::class)
+                ->setOptions(['as_key_value' => true])
+                ->stringToArray($posted);
+        }
+
+        $pairs = [];
+        foreach ((array) $posted as $key => $value) {
+            if (is_array($value)) {
+                $pairs[] = [(string) ($value['o:type'] ?? ''), $value['o:asset']['o:id'] ?? null];
+            } else {
+                $pairs[] = [(string) $key, $value];
+            }
+        }
 
         // Clean request.
         // First, remove asset type not filled to avoid useless message.
-        $newAssets = array_filter($newAssets, fn ($v) => !empty($v['o:type']) || !empty($v['o:asset']['o:id']));
-        $count = count($newAssets);
+        $pairs = array_filter($pairs, fn ($v) => $v[0] !== '' || !empty($v[1]));
+        $count = count($pairs);
         // Second, remove missing type or missing asset.
-        $newAssets = array_filter($newAssets, fn ($v) => !empty($v['o:type']) && !empty($v['o:asset']['o:id']));
+        $pairs = array_filter($pairs, fn ($v) => $v[0] !== '' && !empty($v[1]));
         // Third, keep only one asset by type.
-        $newAssets = array_column(array_map(fn ($v) => ['type' => $v['o:type'], 'assetId' => (int) $v['o:asset']['o:id']], $newAssets), 'assetId', 'type');
+        $newAssets = [];
+        foreach ($pairs as $pair) {
+            $newAssets[$pair[0]] = (int) $pair[1];
+        }
         if (count($newAssets) !== $count) {
             $messenger->addWarning(new PsrMessage(
                 'Some complementary assets were removed because the type is missing or duplicated.') // @translate
@@ -414,12 +437,6 @@ class Module extends AbstractModule
 
         $view = $event->getTarget();
 
-        $assetUrl = $view->plugin('assetUrl');
-        $view->headLink()
-            ->appendStylesheet($assetUrl('css/asset-multi.css', 'AssetMulti'));
-        $view->headScript()
-            ->appendFile($assetUrl('js/asset-multi.js', 'AssetMulti'), 'text/javascript', ['defer' => 'defer']);
-
         $values = [];
 
         // The resource may be null for a new resource.
@@ -445,74 +462,41 @@ class Module extends AbstractModule
             $resourceId = method_exists($resource, 'id') ? $resource->id() : $resource->getId();
             /** @var \AssetMulti\Api\Representation\ResourceAssetRepresentation[] $resourceAssets */
             $resourceAssets = $api->search('resource_assets', ['resource_id' => $resourceId])->getContent();
-            $index = 0;
             foreach ($resourceAssets as $resourceAsset) {
-                $values[] = [
-                    // 'o:type' => $resourceAsset->type(),
-                    // 'o:asset' => ['o:id' => $resourceAsset->asset()->id()],
-                    'o:resource_asset[' . $index . '][o:type]' => $resourceAsset->type(),
-                    'o:resource_asset[' . $index . '][o:asset][o:id]' => $resourceAsset->asset()->id(),
-                ];
-                ++$index;
+                $values[$resourceAsset->type()] = $resourceAsset->asset()->id();
             }
         }
 
-        /**
-         * @var \Laminas\Form\Element\Collection $collection
-         * @var \AssetMulti\Form\AssetTypeFieldset $assetTypeFieldset
-         *
-         * @see \SingleSignOn\Form\ConfigForm
-         */
-        $formManager = $services->get('FormElementManager');
-        $assetTypeFieldset = $formManager->get(\AssetMulti\Form\AssetTypeFieldset::class);
-        $collection = $formManager->get(\Laminas\Form\Element\Collection::class)
+        // A single textarea "type = asset id" is used instead of a collection
+        // of fieldsets: the asset element of Omeka takes too much place when
+        // there are many types. The editor of pairs of module Common displays
+        // it as a compact list of rows, with a picker of the configured types
+        // and the ability to type a new one.
+        $element = $services->get('FormElementManager')
+            ->get(CommonElement\ArrayTextarea::class)
             ->setName('o:resource_asset')
             ->setOptions([
-                'label' => 'Complementary thumbnails', // @ŧranslate
-                'count' => count($values),
-                'allow_add' => true,
-                'allow_remove' => true,
-                'should_create_template' => true,
-                'template_placeholder' => '__index__',
-                'create_new_objects' => true,
-                'target_element' => $assetTypeFieldset,
+                'label' => 'Complementary thumbnails', // @translate
+                'info' => 'One thumbnail by line: the type, then the id of the asset. A resource can only have one asset by type.', // @translate
+                'as_key_value' => true,
+                'pairs_editor' => [
+                    'key_label' => 'Type', // @translate
+                    'value_label' => 'Asset', // @translate
+                    'keys' => $banners,
+                    'key_fill' => false,
+                    // The cell of the value is the asset element of Omeka, so
+                    // the asset is selected with its sidebar.
+                    'value_element' => ['type' => OmekaElement\Asset::class],
+                ],
             ])
             ->setAttributes([
-                'id' => 'o-resource_asset',
-                'required' => false,
-                'class' => 'form-fieldset-collection fieldset-resource-assets',
-                'data-label-index' => $view->translate('Complementary thumbnail {index}'), // @ŧranslate
-            ]);
+                'id' => 'o-resource-asset',
+                'rows' => 5,
+                'placeholder' => "square = 12\nbanner = 47",
+            ])
+            ->setValue($values);
 
-        $collection
-            ->populateValues($values);
-
-        // The placeholders are not converted here, because the collection is
-        // not rendered with the form. The same, the values are not really
-        // populated.
-        // TODO Find the right laminas way to fill a partial collection.
-        $index = 0;
-        $vals = array_merge(...$values);
-        foreach ($collection->getFieldsets() as $fieldset) {
-            foreach ($fieldset->getElements() as $element) {
-                $name = strtr($element->getName(), ['__index__' => $index]);
-                $element
-                    ->setName($name)
-                    ->setValue($vals[$name] ?? null);
-            }
-            ++$index;
-        }
-
-        echo $view->formCollection($collection, true);
-
-        // Render the datalist for type suggestions.
-        $escape = $view->plugin('escapeHtml');
-        $datalist = '<datalist id="assetmulti-types">';
-        foreach ($banners as $type => $label) {
-            $datalist .= sprintf('<option value="%s">%s</option>', $escape($type), $escape($label));
-        }
-        $datalist .= '</datalist>';
-        echo $datalist;
+        echo $view->formRow($element);
     }
 
     public function handleResourceDetails(Event $event): void
