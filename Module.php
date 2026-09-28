@@ -224,6 +224,9 @@ class Module extends AbstractModule
         if (class_exists('DigitalObject\Module', false)) {
             $adaptersAndControllers[\DigitalObject\Api\Adapter\DigitalObjectAdapter::class] = 'DigitalObject\Controller\Admin\DigitalObject';
         }
+        if (class_exists('Thesaurus\Module', false)) {
+            $adaptersAndControllers[\Thesaurus\Api\Adapter\ConceptAdapter::class] = 'Thesaurus\Controller\Admin\ConceptController';
+        }
         foreach ($adaptersAndControllers as $adapter => $controller) {
             // Avoid to do something during batch process.
             $sharedEventManager->attach(
